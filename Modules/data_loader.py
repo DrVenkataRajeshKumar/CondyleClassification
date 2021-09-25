@@ -88,6 +88,8 @@ class LoadFaceDataset():
 data_transforms = {
     'train': transforms.Compose([
         transforms.Resize(256),
+        transforms.Grayscale(num_output_channels=3),
+        transforms.ColorJitter(brightness=0.3, contrast=0.9)
         transforms.RandomRotation(10),
         transforms.RandomHorizontalFlip(),
         transforms.ToTensor(),
@@ -95,7 +97,8 @@ data_transforms = {
                              [0.27420551, 0.25534403, 0.29759673])
     ]),
     'val': transforms.Compose([
-        #transforms.Resize(256),
+        transforms.Resize(256),
+        transforms.Grayscale(num_output_channels=3),
         #transforms.RandomRotation(10),
         #transforms.RandomHorizontalFlip(),
         transforms.CenterCrop(224),
