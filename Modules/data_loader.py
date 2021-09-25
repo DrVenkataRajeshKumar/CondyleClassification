@@ -89,7 +89,7 @@ data_transforms = {
     'train': transforms.Compose([
         transforms.Resize(256),
         transforms.Grayscale(num_output_channels=3),
-        transforms.ColorJitter(brightness=0.3, contrast=0.9)
+        transforms.ColorJitter(brightness=0.3, contrast=0.9),
         transforms.RandomRotation(10),
         transforms.RandomHorizontalFlip(),
         transforms.ToTensor(),
