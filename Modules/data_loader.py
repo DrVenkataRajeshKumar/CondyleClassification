@@ -87,14 +87,17 @@ class LoadFaceDataset():
 
 data_transforms = {
     'train': transforms.Compose([
-        transforms.RandomResizedCrop(224),
+        transforms.Resize(256),
+        transforms.RandomRotation(10),
         transforms.RandomHorizontalFlip(),
         transforms.ToTensor(),
         transforms.Normalize([0.53713346, 0.58979464, 0.62127595],
                              [0.27420551, 0.25534403, 0.29759673])
     ]),
     'val': transforms.Compose([
-        transforms.Resize(256),
+        #transforms.Resize(256),
+        #transforms.RandomRotation(10),
+        #transforms.RandomHorizontalFlip(),
         transforms.CenterCrop(224),
         transforms.ToTensor(),
         transforms.Normalize([0.53713346, 0.58979464, 0.62127595],
@@ -146,8 +149,8 @@ def split_test_train_data(rootImageDir, tstRatio = 0.1):
             writertst.writerow([filename,fldr,dircnt])
         dircnt +=1
 
-class DroneDataset(Dataset):
-    """Define Drone Dataset class to get images and labels .
+class CondDataset(Dataset):
+    """Define Condyles Dataset class to get images and labels .
     Dataset classes
     """
 
@@ -162,7 +165,7 @@ class DroneDataset(Dataset):
             data_file = open('testData.csv','r')
         
         self.data = list(csv.reader(data_file))
-        self.classes = ['Flying Birds', 'Large QuadCopters', 'Small QuadCopters', 'Winged Drones']
+        self.classes = ['Class 1', 'Class 2', 'Class 3', 'Class 4']
 
     def __len__(self):
         """Return length of dataset.
@@ -231,10 +234,10 @@ class LoadDataset():
         split_test_train_data(dir, tstRatio)
 
         trnTransform = data_transforms['train'] 
-        self.trainSet = DroneDataset(train=True, transform = trnTransform)
+        self.trainSet = CondDataset(train=True, transform = trnTransform)
 
         tstTransform = data_transforms['val']
-        self.testSet = DroneDataset(train= False, transform = tstTransform)
+        self.testSet = CondDataset(train= False, transform = tstTransform)
 
         self.dataloaders = {'train': torch.utils.data.DataLoader(self.trainSet, batch_size= batch_size, 
                                                             shuffle=True, num_workers=4),
