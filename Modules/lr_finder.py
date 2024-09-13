@@ -3,6 +3,7 @@ import copy
 import os
 import torch
 from tqdm.autonotebook import tqdm
+from tqdm.tqdm import tqdm
 from torch.optim.lr_scheduler import _LRScheduler
 import matplotlib.pyplot as plt
 
